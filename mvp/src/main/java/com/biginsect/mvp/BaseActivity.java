@@ -18,6 +18,7 @@ public abstract class BaseActivity<P extends MvpPresenter>
     protected P mPresenter;
     private Unbinder unbinder;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
