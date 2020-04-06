@@ -18,7 +18,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 
@@ -50,6 +49,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
 
     private String userName;
     private String password;
+
+    private final static String EXTRA_NAME = "name";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,7 +95,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
 
     @Override
     public void studentLoginSucceed() {
-        startActivity(new Intent(this, StudentInfoPageActivity.class));
+        Intent intent = new Intent(this, StudentInfoPageActivity.class);
+        intent.putExtra(EXTRA_NAME, userName);
+        startActivity(intent);
         finish();
     }
 

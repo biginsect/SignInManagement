@@ -24,6 +24,8 @@
         <activity android:name=".MainActivity"/>
         <activity android:name=".student.StudentInfoPageActivity"
             android:theme="@style/BaseTheme"/>
+        <activity android:name=".teacher.TeacherHomePageActivity"
+            android:theme="@style/BaseTheme"/>
     </application>
 
 </manifest>

@@ -26,8 +26,8 @@ public abstract class BaseActivity<P extends MvpPresenter>
             setContentView(getLayoutId());
             unbinder = ButterKnife.bind(getActivity());
         }
-        if (null == mPresenter) {
-            mPresenter = createPresenter();
+        mPresenter = createPresenter();
+        if (mPresenter != null) {
             mPresenter.attachedView(this);
         }
         initView();
