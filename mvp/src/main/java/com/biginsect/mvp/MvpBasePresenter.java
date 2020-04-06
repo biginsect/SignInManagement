@@ -44,7 +44,7 @@ public abstract class MvpBasePresenter<V extends MvpView> implements MvpPresente
         }
     }
 
-    interface ViewAction<V> {
+    public interface ViewAction<V> {
         void run(V v);
     }
 }
