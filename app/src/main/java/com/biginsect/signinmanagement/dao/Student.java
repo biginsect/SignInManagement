@@ -13,11 +13,11 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Student implements Parcelable {
-    @Id(autoincrement = true)
+    @Id
     private Long studentId;
     private String studentName;
     private String studentPassword;
-    
+
 
     protected Student(Parcel in) {
         studentId = in.readLong();
@@ -35,6 +35,7 @@ public class Student implements Parcelable {
     @Generated(hash = 1556870573)
     public Student() {
     }
+
 
     public static final Creator<Student> CREATOR = new Creator<Student>() {
         @Override
