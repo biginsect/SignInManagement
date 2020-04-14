@@ -26,4 +26,5 @@
     <!--教师主页-->
     <string name="add_student">添加学生</string>
     <string name="attendance_check">考勤统计</string>
+    <string name="course_management">课程管理</string>
 </resources>

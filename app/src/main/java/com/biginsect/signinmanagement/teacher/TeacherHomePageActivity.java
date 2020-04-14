@@ -19,6 +19,8 @@ public class TeacherHomePageActivity extends BaseActivity {
     LinearLayout llTeacherAddStudent;
     @BindView(R.id.ll_teacher_attendance_check)
     LinearLayout llTeacherAttendanceCheck;
+    @BindView(R.id.ll_teacher_course_management)
+    LinearLayout llTeacherCourseManagement;
 
     @Override
     protected int getLayoutId() {
@@ -41,12 +43,17 @@ public class TeacherHomePageActivity extends BaseActivity {
     }
 
     @OnClick(R.id.ll_teacher_add_student)
-    public void addStudentClicked(){
+    public void addStudentClicked() {
 
     }
 
     @OnClick(R.id.ll_teacher_attendance_check)
-    public void checkAttendanceClicked(){
+    public void checkAttendanceClicked() {
 
     }
+
+   @OnClick(R.id.ll_teacher_course_management)
+    public void courseManagementClicked(){
+
+   }
 }
