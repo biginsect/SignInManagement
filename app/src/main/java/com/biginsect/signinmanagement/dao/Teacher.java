@@ -14,10 +14,21 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class Teacher implements Parcelable {
 
-    @Id(autoincrement = true)
+    @Id
     private Long teacherId;
     private String teacherName;
     private String teacherPassword;
+    
+
+    protected Teacher(Parcel in) {
+        if (in.readByte() == 0) {
+            teacherId = null;
+        } else {
+            teacherId = in.readLong();
+        }
+        teacherName = in.readString();
+        teacherPassword = in.readString();
+    }
 
     @Generated(hash = 1916755203)
     public Teacher(Long teacherId, String teacherName, String teacherPassword) {
@@ -28,16 +39,6 @@ public class Teacher implements Parcelable {
 
     @Generated(hash = 1630413260)
     public Teacher() {
-    }
-
-    protected Teacher(Parcel in) {
-        if (in.readByte() == 0) {
-            teacherId = null;
-        } else {
-            teacherId = in.readLong();
-        }
-        teacherName = in.readString();
-        teacherPassword = in.readString();
     }
 
     public static final Creator<Teacher> CREATOR = new Creator<Teacher>() {

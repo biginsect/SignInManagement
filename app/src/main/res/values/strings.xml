@@ -22,6 +22,7 @@
     <string name="student_sign">签到</string>
     <string name="student_absence">请假</string>
     <string name="student_attendance">考勤</string>
+    <string name="setting">设置</string>
 
     <!--教师主页-->
     <string name="add_student">添加学生</string>

@@ -40,7 +40,7 @@ public class TeacherDao extends AbstractDao<Teacher, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TEACHER\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: teacherId
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: teacherId
                 "\"TEACHER_NAME\" TEXT," + // 1: teacherName
                 "\"TEACHER_PASSWORD\" TEXT);"); // 2: teacherPassword
     }

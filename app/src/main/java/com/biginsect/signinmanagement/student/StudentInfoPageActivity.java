@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
 
 /**
@@ -97,5 +98,10 @@ public class StudentInfoPageActivity extends BaseActivity {
             String nameText = intent.getStringExtra(EXTRA_NAME);
             tvStudentName.setText(nameText);
         }
+    }
+
+    @OnClick(R.id.ll_student_setting)
+    public void onSettingClicked(){
+        startActivity(new Intent(this, StudentSettingActivity.class));
     }
 }
