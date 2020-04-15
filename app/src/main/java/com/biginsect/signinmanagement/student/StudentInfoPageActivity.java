@@ -1,13 +1,11 @@
 package com.biginsect.signinmanagement.student;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,7 +84,7 @@ public class StudentInfoPageActivity extends BaseActivity {
     @Override
     protected void initData() {
         selections.add(new StudentSelection(R.drawable.student_sign, getString(R.string.student_sign)));
-        selections.add(new StudentSelection(R.drawable.student_absence, getString(R.string.student_absence)));
+        selections.add(new StudentSelection(R.drawable.student_absence, getString(R.string.student_leave)));
         selections.add(new StudentSelection(R.drawable.student_attendance, getString(R.string.student_attendance)));
         mAdapter.setList(selections);
         handleIntent();

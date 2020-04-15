@@ -20,7 +20,7 @@
     <!--学生主页-->
     <string name="welcome">，欢迎你</string>
     <string name="student_sign">签到</string>
-    <string name="student_absence">请假</string>
+    <string name="student_leave">请假</string>
     <string name="student_attendance">考勤</string>
     <string name="setting">设置</string>
 
