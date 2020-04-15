@@ -28,4 +28,6 @@
     <string name="add_student">添加学生</string>
     <string name="attendance_check">考勤统计</string>
     <string name="course_management">课程管理</string>
+    <string name="add_course">添加课程</string>
+    <string name="delete_course">删除课程</string>
 </resources>

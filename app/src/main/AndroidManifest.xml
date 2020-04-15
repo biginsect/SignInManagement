@@ -28,6 +28,8 @@
             android:theme="@style/BaseTheme"/>
         <activity android:name=".student.StudentSettingActivity"
             android:theme="@style/BaseTheme"/>
+        <activity android:name=".teacher.CourseManageActivity"
+            android:theme="@style/BaseTheme"/>
     </application>
 
 </manifest>

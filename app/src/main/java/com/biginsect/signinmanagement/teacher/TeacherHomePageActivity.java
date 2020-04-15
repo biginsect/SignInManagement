@@ -1,5 +1,6 @@
 package com.biginsect.signinmanagement.teacher;
 
+import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.biginsect.mvp.BaseActivity;
@@ -54,6 +55,6 @@ public class TeacherHomePageActivity extends BaseActivity {
 
    @OnClick(R.id.ll_teacher_course_management)
     public void courseManagementClicked(){
-
+        startActivity(new Intent(this, CourseManageActivity.class));
    }
 }
