@@ -38,7 +38,7 @@
             android:background="@drawable/bg_rd8_008577"
             android:text="@string/add_course"
             android:textSize="18dp"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/color_FFFFFF" />
 
         <Button
             android:layout_width="0dp"
@@ -47,7 +47,7 @@
             android:background="@drawable/bg_rd8_008577"
             android:text="@string/delete_course"
             android:textSize="18dp"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/color_FFFFFF" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

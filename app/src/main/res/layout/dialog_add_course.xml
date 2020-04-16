@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_course_id_text"
+        style="@style/AddCourseButtonTextStyle"
+        android:text="@string/course_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_course_name_text"
+        style="@style/AddCourseButtonTextStyle"
+        android:text="@string/course_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_course_id_text" />
+
+    <TextView
+        android:id="@+id/tv_course_day_of_week_text"
+        style="@style/AddCourseButtonTextStyle"
+        android:text="@string/day_of_week"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_course_name_text" />
+
+    <TextView
+        android:id="@+id/tv_course_time_frame_text"
+        style="@style/AddCourseButtonTextStyle"
+        android:text="@string/time_frame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_course_day_of_week_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

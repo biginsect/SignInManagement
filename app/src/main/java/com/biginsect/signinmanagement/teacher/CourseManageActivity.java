@@ -8,7 +8,7 @@ import com.biginsect.signinmanagement.R;
  * @author biginsect
  * @date 2020/4/16
  */
-public class CourseManageActivity extends BaseActivity {
+public class CourseManageActivity extends BaseActivity<CourseManagePresenter> implements ICourseManageContract.IView {
 
     @Override
     protected int getLayoutId() {
@@ -16,8 +16,8 @@ public class CourseManageActivity extends BaseActivity {
     }
 
     @Override
-    protected MvpPresenter createPresenter() {
-        return null;
+    protected CourseManagePresenter createPresenter() {
+        return new CourseManagePresenter();
     }
 
     @Override

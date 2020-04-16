@@ -30,4 +30,8 @@
     <string name="course_management">课程管理</string>
     <string name="add_course">添加课程</string>
     <string name="delete_course">删除课程</string>
+    <string name="course_number">课程号码</string>
+    <string name="course_name">课程名称</string>
+    <string name="day_of_week">上课日期</string>
+    <string name="time_frame">时间范围</string>
 </resources>
