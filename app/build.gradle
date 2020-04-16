@@ -54,6 +54,8 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2'
     //dialog
     implementation 'com.kongzue.dialog_v3x:dialog:3.1.8'
+    //picker
+    implementation  'com.github.addappcn:android-pickers:2.0.0'
 
     implementation project(path: ':mvp')
 }

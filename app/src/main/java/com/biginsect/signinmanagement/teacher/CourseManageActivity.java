@@ -1,7 +1,6 @@
 package com.biginsect.signinmanagement.teacher;
 
 import com.biginsect.mvp.BaseActivity;
-import com.biginsect.mvp.MvpPresenter;
 import com.biginsect.signinmanagement.R;
 
 /**
