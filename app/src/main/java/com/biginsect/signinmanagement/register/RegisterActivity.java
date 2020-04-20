@@ -1,19 +1,12 @@
-package com.biginsect.signinmanagement.login;
+package com.biginsect.signinmanagement.register;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import com.biginsect.mvp.BaseActivity;
-import com.biginsect.signinmanagement.MainActivity;
 import com.biginsect.signinmanagement.R;
-import com.biginsect.signinmanagement.register.RegisterActivity;
-import com.biginsect.signinmanagement.student.StudentInfoPageActivity;
 import com.biginsect.signinmanagement.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,15 +17,18 @@ import es.dmoral.toasty.Toasty;
 
 /**
  * @author biginsect
- * @date 2020-03-25
+ * @date 2020/4/20
  */
-public class LoginActivity extends BaseActivity<LoginPresenter>
-        implements ILoginContract.IView {
+public class RegisterActivity extends BaseActivity<RegisterPresenter> implements IRegisterContract.IView {
 
     @BindView(R.id.et_user_name)
     TextInputEditText etUserName;
     @BindView(R.id.layout_user_name)
     TextInputLayout layoutUserName;
+    @BindView(R.id.et_user_id)
+    TextInputEditText etUserId;
+    @BindView(R.id.layout_user_id)
+    TextInputLayout layoutUserId;
     @BindView(R.id.et_password)
     TextInputEditText etPassword;
     @BindView(R.id.layout_password)
@@ -43,29 +39,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     RadioButton rbTeacher;
     @BindView(R.id.group_user)
     RadioGroup groupUser;
-    @BindView(R.id.btn_login)
-    Button btnLogin;
     @BindView(R.id.btn_register)
     Button btnRegister;
 
+    private String userName;
     private String userIdText;
     private String password;
 
-    private final static String EXTRA_NAME = "name";
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_login;
-    }
-
-    @Override
-    protected LoginPresenter createPresenter() {
-        return new LoginPresenter();
+        return R.layout.activity_register;
     }
 
     @Override
@@ -79,8 +62,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     }
 
     @Override
-    public void showInvalidInformation() {
-        Toasty.error(this, getText(R.string.invalid_information), Toast.LENGTH_SHORT).show();
+    protected RegisterPresenter createPresenter() {
+        return new RegisterPresenter();
     }
 
     @Override
@@ -89,37 +72,29 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     }
 
     @Override
-    public void teacherLoginSucceed() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
+    public void showInvalidInformation() {
+        Toasty.error(this, getText(R.string.please_check_info), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void studentLoginSucceed() {
-        Intent intent = new Intent(this, StudentInfoPageActivity.class);
-        intent.putExtra(EXTRA_NAME, userIdText);
-        startActivity(intent);
-        finish();
+    public void registerSucceed() {
+        Toasty.success(this, getString(R.string.register_succeed), Toast.LENGTH_SHORT).show();
+        postDelayFinish(1000);
     }
 
     @Override
-    public void loginFailed() {
-        Toasty.error(this, getString(R.string.wrong_user_name_or_password), Toast.LENGTH_SHORT).show();
+    public void idIsExist() {
+        Toasty.error(this, getString(R.string.id_exist), Toasty.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void showNoUser() {
-        Toasty.error(this, getString(R.string.no_that_user), Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.btn_login)
-    public void onLoginClicked() {
-        if (checkNameAndPassword()){
+    @OnClick(R.id.btn_register)
+    public void onRegisterClicked(){
+        if (checkInfo()){
             long id = Long.parseLong(userIdText);
             if (rbTeacher.isChecked()) {
-                mPresenter.teacherLogin(id, password);
+                mPresenter.teacherRegister(userName, id, password);
             }else if (rbStudent.isChecked()){
-                mPresenter.studentLogin(id, password);
+                mPresenter.studentRegister(userName, id, password);
             }else {
                 showSelectOccupation();
             }
@@ -128,21 +103,22 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
         }
     }
 
-    @OnClick(R.id.btn_register)
-    public void onRegisterClicked(){
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-    }
-
-    private boolean checkNameAndPassword() {
+    private boolean checkInfo() {
         boolean valid = true;
-        userIdText = etUserName.getText().toString();
+        userName = etUserName.getText().toString();
+        userIdText = etUserId.getText().toString();
         password = etPassword.getText().toString();
+        if (StringUtils.isBlank(userName)){
+            valid = false;
+            layoutUserName.setError(getString(R.string.invalid_user_name));
+        }else {
+            layoutUserName.setErrorEnabled(false);
+        }
         if (StringUtils.isBlank(userIdText)) {
             valid = false;
-            layoutUserName.setError(getString(R.string.invalid_user_id));
+            layoutUserId.setError(getString(R.string.invalid_user_id));
         } else {
-            layoutUserName.setErrorEnabled(false);
+            layoutUserId.setErrorEnabled(false);
         }
         if (StringUtils.isBlank(password)) {
             valid = false;

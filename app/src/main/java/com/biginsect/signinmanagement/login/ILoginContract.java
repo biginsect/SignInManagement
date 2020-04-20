@@ -21,19 +21,13 @@ public interface ILoginContract {
 
         void studentLoginSucceed();
 
-        void registerSucceed();
-
         void showNoUser();
     }
 
     interface IPresenter extends MvpPresenter<IView> {
 
-        void teacherLogin(String userName, String password);
+        void teacherLogin(long id, String password);
 
-        void studentLogin(String userName, String password);
-
-        void studentRegister(String userName, String password);
-
-        void teacherRegister(String userName, String password);
+        void studentLogin(long id, String password);
     }
 }

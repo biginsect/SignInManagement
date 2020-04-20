@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".register.RegisterActivity"
+            android:theme="@style/BaseTheme"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".student.StudentInfoPageActivity"
             android:theme="@style/BaseTheme"/>

@@ -17,7 +17,7 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
 
 
     @Override
-    public void teacherLogin(String userName, String password) {
+    public void teacherLogin(long id, String password) {
         List<Teacher> teacherList = AppApplication.getDaoSession().getTeacherDao().queryBuilder().list();
         if (!isAttached()) {
             return;
@@ -26,7 +26,7 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
             getView().showNoUser();
         } else {
             for (Teacher teacher : teacherList) {
-                if (userName.equals(teacher.getTeacherName()) && password.equals(teacher.getTeacherPassword())) {
+                if (id == teacher.getTeacherId() && password.equals(teacher.getTeacherPassword())) {
                     getView().teacherLoginSucceed();
                 } else {
                     getView().loginFailed();
@@ -36,7 +36,7 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
     }
 
     @Override
-    public void studentLogin(String userName, String password) {
+    public void studentLogin(long id, String password) {
         List<Student> studentList = AppApplication.getDaoSession().getStudentDao().queryBuilder().list();
         if (!isAttached()) {
             return;
@@ -45,36 +45,12 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
             getView().showNoUser();
         } else {
             for (Student student : studentList) {
-                if (userName.equals(student.getStudentName()) && password.equals(student.getStudentPassword())) {
+                if (id == student.getStudentId() && password.equals(student.getStudentPassword())) {
                     getView().studentLoginSucceed();
                 } else {
                     getView().loginFailed();
                 }
             }
-        }
-    }
-
-    @Override
-    public void studentRegister(String userName, String password) {
-        Student student = new Student();
-        student.setStudentId(null);
-        student.setStudentName(userName);
-        student.setStudentPassword(password);
-        AppApplication.getDaoSession().getStudentDao().insertOrReplace(student);
-        if (isAttached()) {
-            getView().registerSucceed();
-        }
-    }
-
-    @Override
-    public void teacherRegister(String userName, String password) {
-        Teacher teacher = new Teacher();
-        teacher.setTeacherId(null);
-        teacher.setTeacherName(userName);
-        teacher.setTeacherPassword(password);
-        AppApplication.getDaoSession().getTeacherDao().insertOrReplace(teacher);
-        if (isAttached()) {
-            getView().registerSucceed();
         }
     }
 }

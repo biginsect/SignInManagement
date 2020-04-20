@@ -1,6 +1,7 @@
 package com.biginsect.mvp;
 
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,15 @@ public abstract class BaseActivity<P extends MvpPresenter>
         if (null != unbinder) {
             unbinder.unbind();
         }
+    }
+
+    protected void postDelayFinish(int time){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, time);
     }
 
     protected BaseActivity getActivity() {
