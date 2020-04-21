@@ -9,11 +9,15 @@ import com.biginsect.mvp.MvpView;
  */
 public interface ISettingContract {
 
-    interface IView extends MvpView{
+    interface IView extends MvpView {
 
+        void studentNotExist();
+
+        void updateSuccess();
     }
 
-    interface IPresenter extends MvpPresenter<IView>{
+    interface IPresenter extends MvpPresenter<IView> {
 
+        void updatePassword(long studentId, String newPassword);
     }
 }

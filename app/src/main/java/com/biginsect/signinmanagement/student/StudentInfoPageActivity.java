@@ -98,7 +98,7 @@ public class StudentInfoPageActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.ll_student_setting)
+    @OnClick(R.id.cl_student_setting)
     public void onSettingClicked(){
         startActivity(new Intent(this, StudentSettingActivity.class));
     }

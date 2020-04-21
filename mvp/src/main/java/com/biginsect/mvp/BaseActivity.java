@@ -3,6 +3,7 @@ package com.biginsect.mvp;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,6 +61,7 @@ public abstract class BaseActivity<P extends MvpPresenter>
         return this;
     }
 
+    @LayoutRes
     protected abstract int getLayoutId();
 
     protected abstract P createPresenter();
