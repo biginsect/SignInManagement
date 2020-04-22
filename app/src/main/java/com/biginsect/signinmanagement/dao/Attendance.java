@@ -10,6 +10,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.converter.PropertyConverter;
 
 /**
+ * 考勤表
  * @author lipeng
  * Created at 2020/4/14 11:15
  */
@@ -22,17 +23,7 @@ public class Attendance implements Parcelable {
     @Convert(converter = StateConverter.class, columnType = Integer.class)
     private State state;
     private long studentId;
-
-    @Generated(hash = 1048853817)
-    public Attendance(Long attId, State state, long studentId) {
-        this.attId = attId;
-        this.state = state;
-        this.studentId = studentId;
-    }
-
-    @Generated(hash = 812698609)
-    public Attendance() {
-    }
+    private long courseId;
 
     protected Attendance(Parcel in) {
         if (in.readByte() == 0) {
@@ -42,6 +33,19 @@ public class Attendance implements Parcelable {
         }
         state = in.readParcelable(State.class.getClassLoader());
         studentId = in.readLong();
+        courseId = in.readLong();
+    }
+
+    @Generated(hash = 1787023816)
+    public Attendance(Long attId, State state, long studentId, long courseId) {
+        this.attId = attId;
+        this.state = state;
+        this.studentId = studentId;
+        this.courseId = courseId;
+    }
+
+    @Generated(hash = 812698609)
+    public Attendance() {
     }
 
     public static final Creator<Attendance> CREATOR = new Creator<Attendance>() {
@@ -80,6 +84,14 @@ public class Attendance implements Parcelable {
         this.attId = attId;
     }
 
+    public long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,6 +107,7 @@ public class Attendance implements Parcelable {
         }
         dest.writeParcelable(state, flags);
         dest.writeLong(studentId);
+        dest.writeLong(courseId);
     }
 
     public enum State implements Parcelable{

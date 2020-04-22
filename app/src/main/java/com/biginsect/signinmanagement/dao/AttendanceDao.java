@@ -28,6 +28,7 @@ public class AttendanceDao extends AbstractDao<Attendance, Long> {
         public final static Property AttId = new Property(0, Long.class, "attId", true, "_id");
         public final static Property State = new Property(1, Integer.class, "state", false, "STATE");
         public final static Property StudentId = new Property(2, long.class, "studentId", false, "STUDENT_ID");
+        public final static Property CourseId = new Property(3, long.class, "courseId", false, "COURSE_ID");
     }
 
     private final StateConverter stateConverter = new StateConverter();
@@ -46,7 +47,8 @@ public class AttendanceDao extends AbstractDao<Attendance, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"ATTENDANCE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: attId
                 "\"STATE\" INTEGER," + // 1: state
-                "\"STUDENT_ID\" INTEGER NOT NULL );"); // 2: studentId
+                "\"STUDENT_ID\" INTEGER NOT NULL ," + // 2: studentId
+                "\"COURSE_ID\" INTEGER NOT NULL );"); // 3: courseId
     }
 
     /** Drops the underlying database table. */
@@ -69,6 +71,7 @@ public class AttendanceDao extends AbstractDao<Attendance, Long> {
             stmt.bindLong(2, stateConverter.convertToDatabaseValue(state));
         }
         stmt.bindLong(3, entity.getStudentId());
+        stmt.bindLong(4, entity.getCourseId());
     }
 
     @Override
@@ -85,6 +88,7 @@ public class AttendanceDao extends AbstractDao<Attendance, Long> {
             stmt.bindLong(2, stateConverter.convertToDatabaseValue(state));
         }
         stmt.bindLong(3, entity.getStudentId());
+        stmt.bindLong(4, entity.getCourseId());
     }
 
     @Override
@@ -97,7 +101,8 @@ public class AttendanceDao extends AbstractDao<Attendance, Long> {
         Attendance entity = new Attendance( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // attId
             cursor.isNull(offset + 1) ? null : stateConverter.convertToEntityProperty(cursor.getInt(offset + 1)), // state
-            cursor.getLong(offset + 2) // studentId
+            cursor.getLong(offset + 2), // studentId
+            cursor.getLong(offset + 3) // courseId
         );
         return entity;
     }
@@ -107,6 +112,7 @@ public class AttendanceDao extends AbstractDao<Attendance, Long> {
         entity.setAttId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setState(cursor.isNull(offset + 1) ? null : stateConverter.convertToEntityProperty(cursor.getInt(offset + 1)));
         entity.setStudentId(cursor.getLong(offset + 2));
+        entity.setCourseId(cursor.getLong(offset + 3));
      }
     
     @Override

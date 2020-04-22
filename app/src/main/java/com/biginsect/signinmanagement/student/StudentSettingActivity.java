@@ -22,7 +22,7 @@ import es.dmoral.toasty.Toasty;
  */
 public class StudentSettingActivity extends BaseActivity<SettingPresenter> implements ISettingContract.IView {
 
-    @BindView(R.id.cl_student_update_teacher)
+    @BindView(R.id.cl_student_personal_info)
     ConstraintLayout clStudentUpdateTeacher;
     @BindView(R.id.cl_student_update_password)
     ConstraintLayout clStudentUpdatePassword;
@@ -58,18 +58,14 @@ public class StudentSettingActivity extends BaseActivity<SettingPresenter> imple
         Toasty.success(this, getString(R.string.update_success), Toasty.LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.cl_student_update_teacher, R.id.cl_student_update_password})
+    @OnClick({R.id.cl_student_personal_info, R.id.cl_student_update_password})
     public void onViewClicked(View view) {
         final int viewId = view.getId();
-        if (viewId == R.id.cl_student_update_teacher) {
-            updateTeacher();
+        if (viewId == R.id.cl_student_personal_info) {
+
         } else if (viewId == R.id.cl_student_update_password) {
             updatePassword();
         }
-    }
-
-    private void updateTeacher() {
-
     }
 
     private void updatePassword() {

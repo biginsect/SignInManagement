@@ -16,8 +16,6 @@ import butterknife.OnClick;
  */
 public class TeacherHomePageActivity extends BaseActivity {
 
-    @BindView(R.id.ll_teacher_add_student)
-    LinearLayout llTeacherAddStudent;
     @BindView(R.id.ll_teacher_attendance_check)
     LinearLayout llTeacherAttendanceCheck;
     @BindView(R.id.ll_teacher_course_management)
@@ -40,11 +38,6 @@ public class TeacherHomePageActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
-    }
-
-    @OnClick(R.id.ll_teacher_add_student)
-    public void addStudentClicked() {
 
     }
 

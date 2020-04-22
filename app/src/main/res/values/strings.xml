@@ -29,7 +29,7 @@
     <string name="student_leave">请假</string>
     <string name="student_attendance">考勤</string>
     <string name="setting">设置</string>
-    <string name="update_teacher">添加导师</string>
+    <string name="personal_info">个人信息</string>
     <string name="update_password">修改密码</string>
     <string name="last_password">旧密码:</string>
     <string name="new_password">新密码:</string>
@@ -39,7 +39,6 @@
     <string name="update_success">修改成功</string>
 
     <!--教师主页-->
-    <string name="add_student">添加学生</string>
     <string name="attendance_check">考勤统计</string>
     <string name="course_management">课程管理</string>
     <string name="add_course">添加课程</string>

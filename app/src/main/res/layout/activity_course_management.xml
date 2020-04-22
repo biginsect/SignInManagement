@@ -8,10 +8,17 @@
         android:id="@+id/tb_course_management_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
+        android:gravity="center_vertical"
         app:contentInsetStart="0dp"
         app:contentInsetEnd="0dp"
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_course_manage_back"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@drawable/back_left_black"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,6 +27,15 @@
             android:layout_gravity="center"
             android:textColor="@color/color_FFFFFF"
             android:text="@string/course_management" />
+
+        <ImageView
+            android:id="@+id/iv_teacher_add_course"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:src="@drawable/add"
+            android:scaleType="centerCrop"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/dp_8" />
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout

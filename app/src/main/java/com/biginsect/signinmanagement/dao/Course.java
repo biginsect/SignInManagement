@@ -18,6 +18,8 @@ public class Course implements Parcelable {
     @Id
     private long courseId;
     private String courseName;
+    //当前教师id
+    private long teacherId;
     ///当前课程是周几的（周日至下一周周六）
     @Convert(converter = DayForWeekConverter.class, columnType = Integer.class)
     private DayForWeek dayForWeek;
@@ -27,16 +29,18 @@ public class Course implements Parcelable {
     protected Course(Parcel in) {
         courseId = in.readLong();
         courseName = in.readString();
+        teacherId = in.readLong();
         dayForWeek = in.readParcelable(DayForWeek.class.getClassLoader());
         startTime = in.readLong();
         endTime = in.readLong();
     }
 
-    @Generated(hash = 1023665047)
-    public Course(long courseId, String courseName, DayForWeek dayForWeek,
-                  long startTime, long endTime) {
+    @Generated(hash = 2146725457)
+    public Course(long courseId, String courseName, long teacherId, DayForWeek dayForWeek,
+            long startTime, long endTime) {
         this.courseId = courseId;
         this.courseName = courseName;
+        this.teacherId = teacherId;
         this.dayForWeek = dayForWeek;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -67,6 +71,7 @@ public class Course implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(courseId);
         dest.writeString(courseName);
+        dest.writeLong(teacherId);
         dest.writeParcelable(dayForWeek, flags);
         dest.writeLong(startTime);
         dest.writeLong(endTime);
@@ -87,6 +92,14 @@ public class Course implements Parcelable {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public long getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(long teacherId) {
+        this.teacherId = teacherId;
     }
 
     public DayForWeek getDayForWeek() {

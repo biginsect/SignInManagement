@@ -27,9 +27,10 @@ public class CourseDao extends AbstractDao<Course, Long> {
     public static class Properties {
         public final static Property CourseId = new Property(0, long.class, "courseId", true, "_id");
         public final static Property CourseName = new Property(1, String.class, "courseName", false, "COURSE_NAME");
-        public final static Property DayForWeek = new Property(2, Integer.class, "dayForWeek", false, "DAY_FOR_WEEK");
-        public final static Property StartTime = new Property(3, long.class, "startTime", false, "START_TIME");
-        public final static Property EndTime = new Property(4, long.class, "endTime", false, "END_TIME");
+        public final static Property TeacherId = new Property(2, long.class, "teacherId", false, "TEACHER_ID");
+        public final static Property DayForWeek = new Property(3, Integer.class, "dayForWeek", false, "DAY_FOR_WEEK");
+        public final static Property StartTime = new Property(4, long.class, "startTime", false, "START_TIME");
+        public final static Property EndTime = new Property(5, long.class, "endTime", false, "END_TIME");
     }
 
     private final DayForWeekConverter dayForWeekConverter = new DayForWeekConverter();
@@ -48,9 +49,10 @@ public class CourseDao extends AbstractDao<Course, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"COURSE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: courseId
                 "\"COURSE_NAME\" TEXT," + // 1: courseName
-                "\"DAY_FOR_WEEK\" INTEGER," + // 2: dayForWeek
-                "\"START_TIME\" INTEGER NOT NULL ," + // 3: startTime
-                "\"END_TIME\" INTEGER NOT NULL );"); // 4: endTime
+                "\"TEACHER_ID\" INTEGER NOT NULL ," + // 2: teacherId
+                "\"DAY_FOR_WEEK\" INTEGER," + // 3: dayForWeek
+                "\"START_TIME\" INTEGER NOT NULL ," + // 4: startTime
+                "\"END_TIME\" INTEGER NOT NULL );"); // 5: endTime
     }
 
     /** Drops the underlying database table. */
@@ -68,13 +70,14 @@ public class CourseDao extends AbstractDao<Course, Long> {
         if (courseName != null) {
             stmt.bindString(2, courseName);
         }
+        stmt.bindLong(3, entity.getTeacherId());
  
         DayForWeek dayForWeek = entity.getDayForWeek();
         if (dayForWeek != null) {
-            stmt.bindLong(3, dayForWeekConverter.convertToDatabaseValue(dayForWeek));
+            stmt.bindLong(4, dayForWeekConverter.convertToDatabaseValue(dayForWeek));
         }
-        stmt.bindLong(4, entity.getStartTime());
-        stmt.bindLong(5, entity.getEndTime());
+        stmt.bindLong(5, entity.getStartTime());
+        stmt.bindLong(6, entity.getEndTime());
     }
 
     @Override
@@ -86,13 +89,14 @@ public class CourseDao extends AbstractDao<Course, Long> {
         if (courseName != null) {
             stmt.bindString(2, courseName);
         }
+        stmt.bindLong(3, entity.getTeacherId());
  
         DayForWeek dayForWeek = entity.getDayForWeek();
         if (dayForWeek != null) {
-            stmt.bindLong(3, dayForWeekConverter.convertToDatabaseValue(dayForWeek));
+            stmt.bindLong(4, dayForWeekConverter.convertToDatabaseValue(dayForWeek));
         }
-        stmt.bindLong(4, entity.getStartTime());
-        stmt.bindLong(5, entity.getEndTime());
+        stmt.bindLong(5, entity.getStartTime());
+        stmt.bindLong(6, entity.getEndTime());
     }
 
     @Override
@@ -105,9 +109,10 @@ public class CourseDao extends AbstractDao<Course, Long> {
         Course entity = new Course( //
             cursor.getLong(offset + 0), // courseId
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // courseName
-            cursor.isNull(offset + 2) ? null : dayForWeekConverter.convertToEntityProperty(cursor.getInt(offset + 2)), // dayForWeek
-            cursor.getLong(offset + 3), // startTime
-            cursor.getLong(offset + 4) // endTime
+            cursor.getLong(offset + 2), // teacherId
+            cursor.isNull(offset + 3) ? null : dayForWeekConverter.convertToEntityProperty(cursor.getInt(offset + 3)), // dayForWeek
+            cursor.getLong(offset + 4), // startTime
+            cursor.getLong(offset + 5) // endTime
         );
         return entity;
     }
@@ -116,9 +121,10 @@ public class CourseDao extends AbstractDao<Course, Long> {
     public void readEntity(Cursor cursor, Course entity, int offset) {
         entity.setCourseId(cursor.getLong(offset + 0));
         entity.setCourseName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setDayForWeek(cursor.isNull(offset + 2) ? null : dayForWeekConverter.convertToEntityProperty(cursor.getInt(offset + 2)));
-        entity.setStartTime(cursor.getLong(offset + 3));
-        entity.setEndTime(cursor.getLong(offset + 4));
+        entity.setTeacherId(cursor.getLong(offset + 2));
+        entity.setDayForWeek(cursor.isNull(offset + 3) ? null : dayForWeekConverter.convertToEntityProperty(cursor.getInt(offset + 3)));
+        entity.setStartTime(cursor.getLong(offset + 4));
+        entity.setEndTime(cursor.getLong(offset + 5));
      }
     
     @Override

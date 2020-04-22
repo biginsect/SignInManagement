@@ -24,7 +24,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_student_update_teacher"
+        android:id="@+id/cl_student_personal_info"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/color_2F2F2F"
             android:textSize="16dp"
-            android:text="@string/update_teacher"
+            android:text="@string/personal_info"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -60,7 +60,7 @@
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:background="@color/color_FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/cl_student_update_teacher">
+        app:layout_constraintTop_toBottomOf="@id/cl_student_personal_info">
 
         <TextView
             android:layout_width="wrap_content"
