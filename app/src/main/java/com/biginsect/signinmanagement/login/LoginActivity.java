@@ -10,10 +10,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.biginsect.mvp.BaseActivity;
-import com.biginsect.signinmanagement.MainActivity;
 import com.biginsect.signinmanagement.R;
 import com.biginsect.signinmanagement.register.RegisterActivity;
 import com.biginsect.signinmanagement.student.StudentInfoPageActivity;
+import com.biginsect.signinmanagement.teacher.TeacherHomePageActivity;
 import com.biginsect.signinmanagement.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -90,7 +90,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
 
     @Override
     public void teacherLoginSucceed() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, TeacherHomePageActivity.class));
         finish();
     }
 
