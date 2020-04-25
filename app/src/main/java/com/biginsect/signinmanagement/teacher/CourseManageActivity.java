@@ -1,15 +1,25 @@
 package com.biginsect.signinmanagement.teacher;
 
 import android.content.DialogInterface;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 
 import com.biginsect.mvp.BaseActivity;
 import com.biginsect.signinmanagement.R;
+import com.biginsect.signinmanagement.app.AppData;
 import com.biginsect.signinmanagement.dao.Course;
+import com.biginsect.signinmanagement.utils.ListUtils;
+import com.biginsect.signinmanagement.utils.StringUtils;
+import com.kongzue.dialog.v3.CustomDialog;
 import com.zhuangfei.timetable.TimetableView;
 import com.zhuangfei.timetable.listener.ISchedule;
 import com.zhuangfei.timetable.listener.IWeekView;
@@ -29,10 +39,10 @@ import es.dmoral.toasty.Toasty;
  */
 public class CourseManageActivity extends BaseActivity<CourseManagePresenter> implements ICourseManageContract.IView {
 
+    @BindView(R.id.tb_course_management_title)
+    Toolbar mToolbar;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.iv_teacher_add_course)
-    ImageView mIvAddCourse;
     @BindView(R.id.iv_course_manage_back)
     ImageView mIvBack;
     @BindView(R.id.id_weekview)
@@ -62,7 +72,29 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.course_manage_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        final int menuId = item.getItemId();
+        switch (menuId) {
+            case R.id.menu_add_course:
+                break;
+            case R.id.menu_select_week:
+                if (mWeekView.isShowing()) hideWeekView();
+                else showWeekView();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void initView() {
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
         mWeekView.curWeek(1)
                 .callback(new IWeekView.OnWeekItemClickedListener() {
                     @Override
@@ -83,10 +115,17 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                 .isShow(false)//设置隐藏，默认显示
                 .showView();
 
-        mCourseTable.curWeek(1).
-                callback(new ISchedule.OnItemClickListener() {
+        mCourseTable.curWeek(1)
+                .callback(new ISchedule.OnWeekChangedListener() {
                     @Override
-                    public void onItemClick(View v, List<Schedule> scheduleList) {
+                    public void onWeekChanged(int curWeek) {
+                        String title = "第" + curWeek + "周";
+                        mTvTitle.setText(title);
+                    }
+                })
+                .callback(new ISchedule.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, List<Schedule> scheduleList) {//点击某个课
                         Toasty.info(CourseManageActivity.this, "" + scheduleList.size(), Toasty.LENGTH_SHORT).show();
                     }
                 });
@@ -112,14 +151,11 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
         mCourseTable.source(courses).showView();
     }
 
-    @OnClick({R.id.iv_teacher_add_course, R.id.iv_course_manage_back})
+    @OnClick({R.id.iv_course_manage_back})
     public void onViewClicked(View view) {
         final int viewId = view.getId();
         if (viewId == R.id.iv_course_manage_back) {
             finish();
-        } else if (viewId == R.id.iv_teacher_add_course) {//添加课程
-            if (mWeekView.isShowing()) hideWeekView();
-            else showWeekView();
         }
     }
 
@@ -128,7 +164,7 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
      * 对话框修改当前周次
      */
     protected void onWeekLeftLayoutClicked() {
-        final String items[] = new String[20];
+        final String[] items = new String[20];
         int itemCount = mWeekView.itemCount();
         for (int i = 0; i < itemCount; i++) {
             items[i] = "第" + (i + 1) + "周";
@@ -159,15 +195,71 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
     /**
      * 隐藏周次选择，此时需要将课表的日期恢复到本周并将课表切换到当前周
      */
-    public void hideWeekView() {
+    private void hideWeekView() {
         mWeekView.isShow(false);
         int cur = mCourseTable.curWeek();
-        mCourseTable.onDateBuildListener()
-                .onUpdateDate(cur, cur);
+        mCourseTable.onDateBuildListener().onUpdateDate(cur, cur);
         mCourseTable.changeWeekOnly(cur);
     }
 
-    public void showWeekView() {
+    private void showWeekView() {
         mWeekView.isShow(true);
+    }
+
+    private void addCourse() {
+        CustomDialog.show(this, R.layout.layout_add_course, new CustomDialog.OnBindView() {
+            @Override
+            public void onBind(CustomDialog dialog, View v) {
+                Button cancel = v.findViewById(R.id.btn_add_course_cancel);
+                cancel.setOnClickListener(v1 -> dialog.doDismiss());
+                EditText etId = v.findViewById(R.id.et_add_course_id);
+                EditText etName = v.findViewById(R.id.et_add_course_name);
+                EditText etDay = v.findViewById(R.id.et_add_course_day);
+                EditText etStart = v.findViewById(R.id.et_add_course_start);
+                EditText etStep = v.findViewById(R.id.et_add_course_step);
+
+
+                Button ok = v.findViewById(R.id.btn_add_course_ok);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String idStr = etId.getText().toString();
+                        String nameStr = etName.getText().toString();
+                        String dayStr = etDay.getText().toString();
+                        String startStr = etStart.getText().toString();
+                        String stepStr = etStep.getText().toString();
+
+                        if (StringUtils.isBlank(idStr) || StringUtils.isBlank(nameStr) || StringUtils.isBlank(dayStr)
+                                || StringUtils.isBlank(startStr) || StringUtils.isBlank(stepStr)) {
+                            Toasty.warning(CourseManageActivity.this, "信息不能为空!", Toasty.LENGTH_SHORT).show();
+                        } else {
+                            long id = Long.parseLong(idStr);
+                            int day = Integer.parseInt(dayStr);
+                            int start = Integer.parseInt(startStr);
+                            int step = Integer.parseInt(stepStr);
+                            if (day < 1 || day > 7) {
+                                Toasty.error(CourseManageActivity.this, "日期选择是1到7!", Toasty.LENGTH_SHORT).show();
+                            } else if (start < 1 || start > 12) {
+                                Toasty.error(CourseManageActivity.this, "课的开始节数是1到12", Toasty.LENGTH_SHORT).show();
+                            } else if (step < 1 || step > 12) {
+                                Toasty.error(CourseManageActivity.this, "课的总节数是1到12", Toasty.LENGTH_SHORT).show();
+                            } else if (start + step > 12) {
+                                Toasty.error(CourseManageActivity.this, "课的时间超出范围12!", Toasty.LENGTH_SHORT).show();
+                            } else {
+                                Course course = new Course();
+                                course.setCourseId(id);
+                                course.setCourseName(nameStr);
+                                course.setWeekList(ListUtils.defaultWeeks());
+                                course.setStart(start);
+                                course.setStep(step);
+                                course.setTeacherId(AppData.INSTANCE.getCurrentTeacher().getTeacherId());
+                                course.setTeacherName(AppData.INSTANCE.getCurrentTeacher().getTeacherName());
+                                mPresenter.addCourse(course);
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 }

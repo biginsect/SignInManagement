@@ -42,6 +42,7 @@
     <string name="attendance_check">考勤统计</string>
     <string name="course_management">课程管理</string>
     <string name="add_course">添加课程</string>
+    <string name="change_current_week">修改当前周</string>
     <string name="delete_course">删除课程</string>
     <string name="course_number">课程号码</string>
     <string name="course_name">课程名称</string>

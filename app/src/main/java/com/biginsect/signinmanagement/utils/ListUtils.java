@@ -1,5 +1,6 @@
 package com.biginsect.signinmanagement.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,5 +31,14 @@ public final class ListUtils {
      */
     public static <T> int getSize(List<T> list){
         return null == list ? 0 : list.size();
+    }
+
+    public static List<Integer> defaultWeeks(){
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < 21; i ++){
+            result.add(i);
+        }
+
+        return result;
     }
 }

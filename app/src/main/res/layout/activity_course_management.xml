@@ -18,6 +18,7 @@
             android:id="@+id/iv_course_manage_back"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
+            android:padding="@dimen/dp_8"
             android:src="@drawable/back_left_black" />
 
         <TextView
@@ -26,17 +27,8 @@
             android:layout_height="wrap_content"
             android:textSize="20dp"
             android:layout_gravity="center"
-            android:textColor="@color/color_FFFFFF"
-            android:text="@string/course_management" />
+            android:textColor="@color/color_FFFFFF" />
 
-        <ImageView
-            android:id="@+id/iv_teacher_add_course"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:src="@drawable/add"
-            android:scaleType="centerCrop"
-            android:layout_gravity="end"
-            android:layout_marginEnd="@dimen/dp_8" />
     </androidx.appcompat.widget.Toolbar>
 
     <com.zhuangfei.timetable.view.WeekView
