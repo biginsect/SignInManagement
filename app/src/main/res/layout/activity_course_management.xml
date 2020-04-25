@@ -18,9 +18,10 @@
             android:id="@+id/iv_course_manage_back"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:src="@drawable/back_left_black"/>
+            android:src="@drawable/back_left_black" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
@@ -38,32 +39,16 @@
             android:layout_marginEnd="@dimen/dp_8" />
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <com.zhuangfei.timetable.view.WeekView
+        android:id="@+id/id_weekview"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tb_course_management_title" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginEnd="100dp"
-            android:background="@drawable/bg_rd8_008577"
-            android:text="@string/add_course"
-            android:textSize="18dp"
-            android:textColor="@color/color_FFFFFF" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_rd8_008577"
-            android:text="@string/delete_course"
-            android:textSize="18dp"
-            android:textColor="@color/color_FFFFFF" />
-    </LinearLayout>
+    <com.zhuangfei.timetable.TimetableView
+        android:id="@+id/table_course_manage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/id_weekview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

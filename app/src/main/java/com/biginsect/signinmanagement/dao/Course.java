@@ -3,47 +3,88 @@ package com.biginsect.signinmanagement.dao;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.zhuangfei.timetable.model.Schedule;
+import com.zhuangfei.timetable.model.ScheduleEnable;
+
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.converter.PropertyConverter;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * @author lipeng
  * Created at 2020/4/14 11:12
  */
 @Entity
-public class Course implements Parcelable {
+public class Course implements Parcelable, ScheduleEnable {
+    public static final String EXTRAS_ID="extras_id";
+
     @Id
     private long courseId;
     private String courseName;
     //当前教师id
     private long teacherId;
-    ///当前课程是周几的（周日至下一周周六）
-    @Convert(converter = DayForWeekConverter.class, columnType = Integer.class)
-    private DayForWeek dayForWeek;
+    private String teacherName;
+    /**
+     * 开始上课的节次
+     */
+    private int start;
+
+    /**
+     * 上课节数
+     */
+    private int step;
+    /**
+     * 周几上
+     */
+    private int day;
+    /**
+     *  一个随机数，用于对应课程的颜色
+     */
+    private int colorRandom = 0;
     private long startTime;
     private long endTime;
+    /**
+     * 第几周至第几周上
+     */
+    @Convert(columnType = String.class, converter = IntegerConverter.class)
+    private List<Integer> weekList;
 
     protected Course(Parcel in) {
         courseId = in.readLong();
         courseName = in.readString();
         teacherId = in.readLong();
-        dayForWeek = in.readParcelable(DayForWeek.class.getClassLoader());
+        teacherName = in.readString();
+        start = in.readInt();
+        step = in.readInt();
+        day = in.readInt();
+        colorRandom = in.readInt();
         startTime = in.readLong();
         endTime = in.readLong();
     }
 
-    @Generated(hash = 2146725457)
-    public Course(long courseId, String courseName, long teacherId, DayForWeek dayForWeek,
-            long startTime, long endTime) {
+    @Generated(hash = 449820642)
+    public Course(long courseId, String courseName, long teacherId, String teacherName,
+            int start, int step, int day, int colorRandom, long startTime, long endTime,
+            List<Integer> weekList) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.teacherId = teacherId;
-        this.dayForWeek = dayForWeek;
+        this.teacherName = teacherName;
+        this.start = start;
+        this.step = step;
+        this.day = day;
+        this.colorRandom = colorRandom;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.weekList = weekList;
     }
 
     @Generated(hash = 1355838961)
@@ -63,20 +104,18 @@ public class Course implements Parcelable {
     };
 
     @Override
-    public int describeContents() {
-        return 0;
+    public Schedule getSchedule() {
+        Schedule schedule=new Schedule();
+        schedule.setDay(getDay());
+        schedule.setName(getCourseName());
+        schedule.setStart(getStart());
+        schedule.setStep(getStep());
+        schedule.setTeacher(getTeacherName());
+        schedule.setWeekList(getWeekList());
+        schedule.setColorRandom(2);
+        schedule.putExtras(EXTRAS_ID, getCourseId());
+        return schedule;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(courseId);
-        dest.writeString(courseName);
-        dest.writeLong(teacherId);
-        dest.writeParcelable(dayForWeek, flags);
-        dest.writeLong(startTime);
-        dest.writeLong(endTime);
-    }
-
 
     public long getCourseId() {
         return courseId;
@@ -102,16 +141,48 @@ public class Course implements Parcelable {
         this.teacherId = teacherId;
     }
 
-    public DayForWeek getDayForWeek() {
-        return dayForWeek;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setDayForWeek(DayForWeek dayForWeek) {
-        this.dayForWeek = dayForWeek;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getColorRandom() {
+        return colorRandom;
+    }
+
+    public void setColorRandom(int colorRandom) {
+        this.colorRandom = colorRandom;
     }
 
     public long getStartTime() {
-        return this.startTime;
+        return startTime;
     }
 
     public void setStartTime(long startTime) {
@@ -119,67 +190,57 @@ public class Course implements Parcelable {
     }
 
     public long getEndTime() {
-        return this.endTime;
+        return endTime;
     }
 
     public void setEndTime(long endTime) {
         this.endTime = endTime;
     }
 
-    public enum DayForWeek implements Parcelable {
-
-        SUNDAY(1), MONDAY(2), TUESDAY(3),
-        WEDNESDAY(4), THURSDAY(5), FRIDAY(6), SATURDAY(7);
-
-        final int id;
-
-        DayForWeek(int id) {
-            this.id = id;
-        }
-
-
-        public static final Creator<DayForWeek> CREATOR = new Creator<DayForWeek>() {
-            @Override
-            public DayForWeek createFromParcel(Parcel in) {
-                return DayForWeek.values()[in.readInt()];
-            }
-
-            @Override
-            public DayForWeek[] newArray(int size) {
-                return new DayForWeek[size];
-            }
-        };
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(id);
-        }
+    public List<Integer> getWeekList() {
+        return weekList;
     }
 
-    static class DayForWeekConverter implements PropertyConverter<DayForWeek, Integer> {
+    public void setWeekList(List<Integer> weekList) {
+        this.weekList = weekList;
+    }
 
-        @Override
-        public DayForWeek convertToEntityProperty(Integer databaseValue) {
-            if (databaseValue == null)
-                return null;
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-            for (DayForWeek dayForWeek : DayForWeek.values()) {
-                if (dayForWeek.id == databaseValue) {
-                    return dayForWeek;
-                }
-            }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(courseId);
+        dest.writeString(courseName);
+        dest.writeLong(teacherId);
+        dest.writeString(teacherName);
+        dest.writeInt(start);
+        dest.writeInt(step);
+        dest.writeInt(day);
+        dest.writeInt(colorRandom);
+        dest.writeLong(startTime);
+        dest.writeLong(endTime);
+    }
 
-            return DayForWeek.MONDAY;
+    static class IntegerConverter implements PropertyConverter<List<Integer>, String>{
+        private final Gson mGson;
+
+        public IntegerConverter() {
+            mGson = new Gson();
         }
 
         @Override
-        public Integer convertToDatabaseValue(DayForWeek entityProperty) {
-            return entityProperty == null ? null : entityProperty.id;
+        public List<Integer> convertToEntityProperty(String databaseValue) {
+            Type type = new TypeToken<ArrayList<Integer>>() {
+            }.getType();
+            return mGson.<ArrayList<Integer>>fromJson(databaseValue , type);
+        }
+
+        @Override
+        public String convertToDatabaseValue(List<Integer> entityProperty) {
+            return mGson.toJson(entityProperty);
         }
     }
 }
