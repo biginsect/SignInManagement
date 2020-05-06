@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.biginsect.mvp.BaseActivity;
 import com.biginsect.signinmanagement.R;
+import com.biginsect.signinmanagement.app.AppApplication;
 import com.biginsect.signinmanagement.app.AppData;
 import com.biginsect.signinmanagement.dao.Course;
 import com.biginsect.signinmanagement.utils.ListUtils;
@@ -162,6 +163,18 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
         if (viewId == R.id.iv_course_manage_back) {
             finish();
         }
+    }
+
+    @Override
+    public void onFailed(String msg) {
+        Toasty.error(this, msg, Toasty.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addSuccess() {
+        List<Course> courses = AppApplication.getDaoSession().getCourseDao().loadAll();
+        mWeekView.source(courses).showView();
+        mCourseTable.source(courses).updateView();
     }
 
     /**

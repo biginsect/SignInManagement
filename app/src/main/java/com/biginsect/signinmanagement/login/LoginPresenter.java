@@ -1,5 +1,7 @@
 package com.biginsect.signinmanagement.login;
 
+import android.util.Log;
+
 import com.biginsect.mvp.MvpBasePresenter;
 import com.biginsect.signinmanagement.app.AppApplication;
 import com.biginsect.signinmanagement.app.AppData;
@@ -29,6 +31,7 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
         } else {
             for (Teacher teacher : teacherList) {
                 if (teacher.getTeacherId().equals(id) && password.equals(teacher.getTeacherPassword())) {
+                    Log.d("----", "teacherLogin: " + teacher);
                     AppData.INSTANCE.setCurrentTeacher(teacher);
                     getView().teacherLoginSucceed();
                     find = true;

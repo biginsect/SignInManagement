@@ -12,6 +12,9 @@ public interface ICourseManageContract {
 
     interface IView extends MvpView{
 
+        void addSuccess();
+
+        void onFailed(String msg);
     }
 
     interface IPresenter extends MvpPresenter<IView>{
