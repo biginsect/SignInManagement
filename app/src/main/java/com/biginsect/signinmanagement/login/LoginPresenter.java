@@ -19,6 +19,7 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
 
     @Override
     public void teacherLogin(long id, String password) {
+        boolean find = false;
         List<Teacher> teacherList = AppApplication.getDaoSession().getTeacherDao().queryBuilder().list();
         if (!isAttached()) {
             return;
@@ -27,18 +28,21 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
             getView().showNoUser();
         } else {
             for (Teacher teacher : teacherList) {
-                if (id == teacher.getTeacherId() && password.equals(teacher.getTeacherPassword())) {
+                if (teacher.getTeacherId().equals(id) && password.equals(teacher.getTeacherPassword())) {
                     AppData.INSTANCE.setCurrentTeacher(teacher);
                     getView().teacherLoginSucceed();
-                } else {
-                    getView().loginFailed();
+                    find = true;
                 }
             }
+        }
+        if (!find) {
+            getView().loginFailed();
         }
     }
 
     @Override
     public void studentLogin(long id, String password) {
+        boolean find = false;
         List<Student> studentList = AppApplication.getDaoSession().getStudentDao().queryBuilder().list();
         if (!isAttached()) {
             return;
@@ -48,11 +52,13 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
         } else {
             for (Student student : studentList) {
                 if (id == student.getStudentId() && password.equals(student.getStudentPassword())) {
+                    find = true;
                     AppData.INSTANCE.setCurrentStudent(student);
                     getView().studentLoginSucceed();
-                } else {
-                    getView().loginFailed();
                 }
+            }
+            if (!find) {
+                getView().loginFailed();
             }
         }
     }

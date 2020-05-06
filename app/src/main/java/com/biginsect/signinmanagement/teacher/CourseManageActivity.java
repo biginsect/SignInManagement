@@ -82,13 +82,18 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
         final int menuId = item.getItemId();
         switch (menuId) {
             case R.id.menu_add_course:
+                addCourse();
                 break;
             case R.id.menu_select_week:
-                if (mWeekView.isShowing()) hideWeekView();
-                else showWeekView();
+                checkAndShowWeekView();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void checkAndShowWeekView(){
+        if (mWeekView.isShowing()) hideWeekView();
+        else showWeekView();
     }
 
     @Override
@@ -178,18 +183,25 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                     public void onClick(DialogInterface dialogInterface, int i) {
                         target = i;
                     }
-                });
-        builder.setPositiveButton("设置为当前周", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (target != -1) {
-                    mWeekView.curWeek(target + 1).updateView();
-                    mCourseTable.changeWeekForce(target + 1);
-                }
-            }
-        });
-        builder.setNegativeButton("取消", null);
-        builder.create().show();
+                })
+                .setPositiveButton("设置为当前周", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (target != -1) {
+                            mWeekView.curWeek(target + 1).updateView();
+                            mCourseTable.changeWeekForce(target + 1);
+                        }
+                        hideWeekView();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     /**
