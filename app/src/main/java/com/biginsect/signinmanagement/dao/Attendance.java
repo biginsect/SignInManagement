@@ -117,14 +117,19 @@ public class Attendance implements Parcelable {
         ATTENDANCE(1),
 
         /**
+         * 迟到
+         */
+        LATE(2),
+
+        /**
          * 缺课
          */
-        ABSENCE(2),
+        ABSENCE(3),
 
         /**
          * 请假
          */
-        LEAVE(3);
+        LEAVE(4);
 
         final int id;
 

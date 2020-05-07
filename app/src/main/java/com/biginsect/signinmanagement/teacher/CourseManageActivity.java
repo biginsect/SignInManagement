@@ -27,7 +27,6 @@ import com.zhuangfei.timetable.listener.IWeekView;
 import com.zhuangfei.timetable.model.Schedule;
 import com.zhuangfei.timetable.view.WeekView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

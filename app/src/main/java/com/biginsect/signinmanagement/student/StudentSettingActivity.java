@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.biginsect.mvp.BaseActivity;
@@ -22,6 +24,8 @@ import es.dmoral.toasty.Toasty;
  */
 public class StudentSettingActivity extends BaseActivity<SettingPresenter> implements ISettingContract.IView {
 
+    @BindView(R.id.toolbar_student_setting)
+    Toolbar mToolbar;
     @BindView(R.id.cl_student_personal_info)
     ConstraintLayout clStudentUpdateTeacher;
     @BindView(R.id.cl_student_update_password)
@@ -40,7 +44,13 @@ public class StudentSettingActivity extends BaseActivity<SettingPresenter> imple
 
     @Override
     protected void initView() {
-
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(v -> finish());
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
     }
 
     @Override

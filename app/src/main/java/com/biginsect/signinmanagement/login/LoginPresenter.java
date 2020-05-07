@@ -31,7 +31,6 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
         } else {
             for (Teacher teacher : teacherList) {
                 if (teacher.getTeacherId().equals(id) && password.equals(teacher.getTeacherPassword())) {
-                    Log.d("----", "teacherLogin: " + teacher);
                     AppData.INSTANCE.setCurrentTeacher(teacher);
                     getView().teacherLoginSucceed();
                     find = true;
@@ -55,9 +54,9 @@ public class LoginPresenter extends MvpBasePresenter<ILoginContract.IView>
         } else {
             for (Student student : studentList) {
                 if (id == student.getStudentId() && password.equals(student.getStudentPassword())) {
-                    find = true;
                     AppData.INSTANCE.setCurrentStudent(student);
                     getView().studentLoginSucceed();
+                    find = true;
                 }
             }
             if (!find) {

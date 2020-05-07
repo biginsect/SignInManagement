@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.biginsect.mvp.BaseActivity;
 import com.biginsect.signinmanagement.R;
+import com.biginsect.signinmanagement.app.AppData;
 import com.biginsect.signinmanagement.register.RegisterActivity;
 import com.biginsect.signinmanagement.student.StudentInfoPageActivity;
 import com.biginsect.signinmanagement.teacher.TeacherHomePageActivity;
@@ -97,7 +98,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter>
     @Override
     public void studentLoginSucceed() {
         Intent intent = new Intent(this, StudentInfoPageActivity.class);
-        intent.putExtra(EXTRA_NAME, userIdText);
+        intent.putExtra(EXTRA_NAME, AppData.INSTANCE.getCurrentStudent().getStudentName());
         startActivity(intent);
         finish();
     }
