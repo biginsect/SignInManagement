@@ -53,7 +53,6 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
 
     //记录切换的周次，不一定是当前周
     int target = -1;
-    List<Course> courses = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -92,7 +91,7 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
         return super.onOptionsItemSelected(item);
     }
 
-    private void checkAndShowWeekView(){
+    private void checkAndShowWeekView() {
         if (mWeekView.isShowing()) hideWeekView();
         else showWeekView();
     }
@@ -122,6 +121,7 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                 .showView();
 
         mCourseTable.curWeek(1)
+                .isShowFlaglayout(false)
                 .callback(new ISchedule.OnWeekChangedListener() {
                     @Override
                     public void onWeekChanged(int curWeek) {
@@ -139,22 +139,11 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
 
     @Override
     protected void initData() {
-        List<Integer> weeks = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            weeks.add(i);
+        List<Course> courses = AppApplication.getDaoSession().getCourseDao().queryBuilder().list();
+        if (!ListUtils.isEmpty(courses)) {
+            mWeekView.source(courses).showView();
+            mCourseTable.source(courses).showView();
         }
-        for (int i = 0; i < 10; i++) {
-            Course course = new Course();
-            course.setCourseId(i);
-            course.setCourseName("组织");
-            course.setDay(2);
-            course.setStart(1);
-            course.setStep(2);
-            courses.add(course);
-            course.setWeekList(weeks);
-        }
-        mWeekView.source(courses).showView();
-        mCourseTable.source(courses).showView();
     }
 
     @OnClick({R.id.iv_course_manage_back})
@@ -171,10 +160,10 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
     }
 
     @Override
-    public void addSuccess() {
-        List<Course> courses = AppApplication.getDaoSession().getCourseDao().loadAll();
-        mWeekView.source(courses).showView();
-        mCourseTable.source(courses).updateView();
+    public void addSuccess(Course course) {
+        mCourseTable.dataSource().add(course.getSchedule());
+        mCourseTable.updateView();
+        Toasty.info(this, "添加成功", Toasty.LENGTH_SHORT).show();
     }
 
     /**
@@ -272,6 +261,7 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                                 Toasty.error(CourseManageActivity.this, "课的时间超出范围12!", Toasty.LENGTH_SHORT).show();
                             } else {
                                 Course course = new Course();
+                                course.setDay(day);
                                 course.setCourseId(id);
                                 course.setCourseName(nameStr);
                                 course.setWeekList(ListUtils.defaultWeeks());
@@ -280,6 +270,7 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                                 course.setTeacherId(AppData.INSTANCE.getCurrentTeacher().getTeacherId());
                                 course.setTeacherName(AppData.INSTANCE.getCurrentTeacher().getTeacherName());
                                 mPresenter.addCourse(course);
+                                dialog.doDismiss();
                             }
                         }
                     }

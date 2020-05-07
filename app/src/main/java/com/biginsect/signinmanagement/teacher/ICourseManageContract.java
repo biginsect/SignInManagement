@@ -12,7 +12,7 @@ public interface ICourseManageContract {
 
     interface IView extends MvpView{
 
-        void addSuccess();
+        void addSuccess(Course course);
 
         void onFailed(String msg);
     }

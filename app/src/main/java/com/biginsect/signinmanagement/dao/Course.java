@@ -16,6 +16,7 @@ import org.greenrobot.greendao.converter.PropertyConverter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
@@ -24,7 +25,7 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Course implements Parcelable, ScheduleEnable {
-    public static final String EXTRAS_ID="extras_id";
+    public static final String EXTRAS_ID = "extras_id";
 
     @Id
     private long courseId;
@@ -46,7 +47,7 @@ public class Course implements Parcelable, ScheduleEnable {
      */
     private int day;
     /**
-     *  一个随机数，用于对应课程的颜色
+     * 一个随机数，用于对应课程的颜色
      */
     private int colorRandom = 0;
     private long startTime;
@@ -72,8 +73,8 @@ public class Course implements Parcelable, ScheduleEnable {
 
     @Generated(hash = 449820642)
     public Course(long courseId, String courseName, long teacherId, String teacherName,
-            int start, int step, int day, int colorRandom, long startTime, long endTime,
-            List<Integer> weekList) {
+                  int start, int step, int day, int colorRandom, long startTime, long endTime,
+                  List<Integer> weekList) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.teacherId = teacherId;
@@ -105,7 +106,7 @@ public class Course implements Parcelable, ScheduleEnable {
 
     @Override
     public Schedule getSchedule() {
-        Schedule schedule=new Schedule();
+        Schedule schedule = new Schedule();
         schedule.setDay(getDay());
         schedule.setName(getCourseName());
         schedule.setStart(getStart());
@@ -224,7 +225,7 @@ public class Course implements Parcelable, ScheduleEnable {
         dest.writeLong(endTime);
     }
 
-    static class IntegerConverter implements PropertyConverter<List<Integer>, String>{
+    static class IntegerConverter implements PropertyConverter<List<Integer>, String> {
         private final Gson mGson;
 
         public IntegerConverter() {
@@ -235,7 +236,7 @@ public class Course implements Parcelable, ScheduleEnable {
         public List<Integer> convertToEntityProperty(String databaseValue) {
             Type type = new TypeToken<ArrayList<Integer>>() {
             }.getType();
-            return mGson.<ArrayList<Integer>>fromJson(databaseValue , type);
+            return mGson.<ArrayList<Integer>>fromJson(databaseValue, type);
         }
 
         @Override

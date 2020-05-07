@@ -23,7 +23,7 @@ public class CourseManagePresenter extends MvpBasePresenter<ICourseManageContrac
             getView().onFailed("该Id对应的课程已存在!");
         }else {
             AppApplication.getDaoSession().getCourseDao().insertOrReplace(course);
-            getView().addSuccess();
+            getView().addSuccess(course);
         }
     }
 
