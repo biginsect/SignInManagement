@@ -111,6 +111,7 @@ public class Course implements Parcelable, ScheduleEnable {
         schedule.setName(getCourseName());
         schedule.setStart(getStart());
         schedule.setStep(getStep());
+        schedule.setRoom(getTeacherName());
         schedule.setTeacher(getTeacherName());
         schedule.setWeekList(getWeekList());
         schedule.setColorRandom(2);
