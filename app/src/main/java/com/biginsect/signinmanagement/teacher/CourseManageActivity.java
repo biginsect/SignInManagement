@@ -250,15 +250,7 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                             int day = Integer.parseInt(dayStr);
                             int start = Integer.parseInt(startStr);
                             int step = Integer.parseInt(stepStr);
-                            if (day < 1 || day > 7) {
-                                Toasty.error(CourseManageActivity.this, "日期选择是1到7!", Toasty.LENGTH_SHORT).show();
-                            } else if (start < 1 || start > 12) {
-                                Toasty.error(CourseManageActivity.this, "课的开始节数是1到12", Toasty.LENGTH_SHORT).show();
-                            } else if (step < 1 || step > 12) {
-                                Toasty.error(CourseManageActivity.this, "课的总节数是1到12", Toasty.LENGTH_SHORT).show();
-                            } else if (start + step > 12) {
-                                Toasty.error(CourseManageActivity.this, "课的时间超出范围12!", Toasty.LENGTH_SHORT).show();
-                            } else {
+                            if (isCorrect(day, start, step)) {
                                 Course course = new Course();
                                 course.setDay(day);
                                 course.setCourseId(id);
@@ -276,5 +268,27 @@ public class CourseManageActivity extends BaseActivity<CourseManagePresenter> im
                 });
             }
         });
+    }
+
+    private boolean isCorrect(int day, int start, int step) {
+        if (day < 1 || day > 7) {
+            Toasty.error(CourseManageActivity.this, "日期选择是1到7!", Toasty.LENGTH_SHORT).show();
+            return false;
+        }
+        if (start != 1 && start != 6 && start != 10) {
+            Toasty.error(CourseManageActivity.this, "课的开始节数是1，6或者10!", Toasty.LENGTH_SHORT).show();
+            return false;
+        }
+        if (step < 2 || step > 4) {
+            Toasty.error(CourseManageActivity.this, "课的总节数是2，3或者4!", Toasty.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (start == 10 && step == 4) {
+            Toasty.error(CourseManageActivity.this, "晚上最多能上3节课!", Toasty.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }
